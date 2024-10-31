@@ -163,5 +163,60 @@ Select course_name, credits from courses where credits between 1 and 3;
 ```
 <img width="975" alt="Screenshot 2024-10-28 at 8 48 04 AM" src="https://github.com/user-attachments/assets/8e9f7c36-7e29-4ba3-94c0-6a6b013301b3">
 
+- 'IN' Operator
+```sql
+Select * from Enrollments e where e.grade in (3.7, 3.9);
+```
+<img width="787" alt="Screenshot 2024-10-30 at 8 31 35 AM" src="https://github.com/user-attachments/assets/92c9a17d-ae0c-4cc0-8a30-fb2ab3149b1e">
+
+- 'Is' Operator (NULL)
+
+```sql
+ Select * from Students where phone_number is NULL;
+```
+
+```sql
+Select * from Students where phone_number=NULL;
+```
+Note -  column_name = NULL  { This Doesn't work }
+<img width="1298" alt="Screenshot 2024-10-30 at 7 42 51 AM" src="https://github.com/user-attachments/assets/0ebbe7a6-f725-483f-b072-50a1a527a3e6">
+
+```sql
+ Select * from Students where phone_number is not NULL;
+```
+<img width="1358" alt="Screenshot 2024-10-30 at 7 44 51 AM" src="https://github.com/user-attachments/assets/790ff20b-b8e0-48b2-80b0-727e959c2331">
+
+- 'Like' Operator
+```sql
+Select * from Students where email like 'ap%';
+```
+
+<img width="1440" alt="Screenshot 2024-10-31 at 3 02 41 PM" src="https://github.com/user-attachments/assets/d4e4fbac-ba9e-4c11-90db-81c01ba4830b">
+
+
+- 'JOIN' Oueries
+```sql
+Select Students.first_name, Enrollments.grade from Enrollments JOIN Students ON Enrollments.student_id=Students.student_id;
+```  
+<img width="1440" alt="Screenshot 2024-10-31 at 3 03 02 PM" src="https://github.com/user-attachments/assets/71b9a73d-d0b6-4881-ba76-4f0f31b78466">
+
+- 'NESTED QUERIES'
+
+Q: Find Students enrolled in the course with the most students ( Most Popular Course )
+
+```sql
+Select s.first_name from Students s where s.student_id IN (Select e.student_id from Enrollments e where e.course_id = (Select course_id from enrollments group by course_id order by COUNT(student_id) desc limit 1));
+```
+
+
+
+
+### Assignment 
+ 
+Q1: Write a Query to find the TOP 2 Students with the highest grades in DB ( HINT: LIMIT 2)
+Q2: Write a Query to list all courses where more than 2 students are enrolled
+Q3: Write a query to find Students who enrolled before June 2024 and whose grade is greater than 3.5
+Q4: Write a Query using a 'JOIN' to show full details of students who enrolled in courses taught by 'Apoorv'
+Q5: Write a nested query to find the students who is enrolled in the most courses
 
 
