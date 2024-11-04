@@ -207,16 +207,25 @@ Q: Find Students enrolled in the course with the most students ( Most Popular Co
 ```sql
 Select s.first_name from Students s where s.student_id IN (Select e.student_id from Enrollments e where e.course_id = (Select course_id from enrollments group by course_id order by COUNT(student_id) desc limit 1));
 ```
+<img width="1440" alt="Screenshot 2024-11-04 at 7 35 09 AM" src="https://github.com/user-attachments/assets/6210b846-d6cf-42ca-b6f1-77112013b637">
 
+Breaking down the queries -->
 
-
+```sql
+Select course_id, Count(student_id) from enrollments group by course_id order by Count(student_id) desc limit 1;
+```
+This Query results in the course_id having the highest number students enrolled in that course.
 
 ### Assignment 
  
 Q1: Write a Query to find the TOP 2 Students with the highest grades in DB ( HINT: LIMIT 2)
+
 Q2: Write a Query to list all courses where more than 2 students are enrolled
+
 Q3: Write a query to find Students who enrolled before June 2024 and whose grade is greater than 3.5
+
 Q4: Write a Query using a 'JOIN' to show full details of students who enrolled in courses taught by 'Apoorv'
+
 Q5: Write a nested query to find the students who is enrolled in the most courses
 
 
