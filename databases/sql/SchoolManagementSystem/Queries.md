@@ -220,12 +220,24 @@ This Query results in the course_id having the highest number students enrolled 
  
 Q1: Write a Query to find the TOP 2 Students with the highest grades in DB ( HINT: LIMIT 2)
 
+```sql
+Select Students.first_name, Enrollments.grade from Enrollments JOIN Students ON Enrollments.student_id=Students.student_id order by grade desc LIMIT 2;
+```
+
 Q2: Write a Query to list all courses where more than 2 students are enrolled
+
+```sql
+Select c.course_id, c.course_name, Count(e.student_id) as num_enrolled from courses c Join enrollments e on c.course_id = e.course_id group by c.course_id having count(e.student_id) > 2;
+```
 
 Q3: Write a query to find Students who enrolled before June 2024 and whose grade is greater than 3.5
 
 Q4: Write a Query using a 'JOIN' to show full details of students who enrolled in courses taught by 'Apoorv'
 
 Q5: Write a nested query to find the students who is enrolled in the most courses
+
+```sql
+Select s.first_name from Students s where s.student_id IN (Select e.student_id from Enrollments e where e.student_id = (Select student_id from enrollments group by student_id order by Count(course_id) desc limit 1));
+```
 
 
