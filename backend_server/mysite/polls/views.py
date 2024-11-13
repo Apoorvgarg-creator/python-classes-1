@@ -1,6 +1,8 @@
+from django.db.models import F
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
+from django.urls import reverse
 from .models import Question, Choice
 # Create your views here.
 
@@ -37,4 +39,12 @@ def results(request, ques_id):
 
 # http://127.0.0.1:8000/polls/1/vote/
 def vote(request, ques_id):
-    return HttpResponse("You are voting on question %s."%ques_id)
+    question = get_object_or_404(Question,pk=ques_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST["choice"])
+    except (KeyError, Choice.DoesNotExist):
+        return render(request, "polls/detail.html", {"question":question, "error_message": "You didn't Select a valid choice"})
+    else:
+        selected_choice.votes = F("votes") + 1 # Tells the database to increment the count by 1
+        selected_choice.save()
+        return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))

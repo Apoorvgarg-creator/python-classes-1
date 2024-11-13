@@ -1,6 +1,13 @@
-<h1>{{ question.ques_txt }}</h1>
-<ul>
+<form action="{% url 'polls:vote' question.id %}" method="post">
+{% csrf_token %} 
+<!-- csrf - Cross Site Request Forgeries -->
+<fieldset>
+    <legend><h1>{{ question.ques_txt }}</h1></legend>
+    {% if error_message %}<p><strong> {{ error_message }}</strong></p>{% endif %}
     {% for choice in question.choice_set.all %}
-    <li> {{ choice.choice_txt }}</li>
+    <input type="radio" name="choice" id="choice{{ forloop.counter}}" value="{{choice.id}}">
+    <label for="choice{{ forloop.counter}}"> {{choice.choice_txt}}</label>
     {% endfor %}
-</ul>
+</fieldset>
+<input type="submit" value="vote">
+</form>

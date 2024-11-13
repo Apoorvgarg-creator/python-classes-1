@@ -1,7 +1,8 @@
 {% if latest_question_list %}
 <ul>
     {% for question in latest_question_list%}
-    <li><a href="/polls/{{ question.id }}/">{{ question.ques_txt }}</a></li>
+    <!-- <li><a href="/polls/{{ question.id }}/results">{{ question.ques_txt }}</a></li> -->
+    <li><a href="{% url 'polls:results' question.id %}">{{ question.ques_txt }}</a></li>
     {% endfor %}
 </ul>
 {% else %}
