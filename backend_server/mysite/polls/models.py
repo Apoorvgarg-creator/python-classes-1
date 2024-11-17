@@ -1,6 +1,8 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+
+# One to Many Relationship --> 1 Question -> MANY CHOICES
 class Question(models.Model):
     ques_txt = models.CharField(max_length=50)
     publish_date = models.DateTimeField("date published")
