@@ -10,9 +10,11 @@ class Question(models.Model):
     def __str__(self) -> str:
         return self.ques_txt
     
+    # Can you see what is wrong in this ?
     def was_published_recently(self):
-        return self.publish_date >= timezone.now() - datetime.timedelta(days=1)
-
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.publish_date <= now
+                                    
 class Choice(models.Model):
     ques = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_txt = models.CharField(max_length=100)
